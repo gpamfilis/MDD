@@ -1,141 +1,7 @@
+__author__   = 'George Pamfilis'
+__version__  = '1.0'
+__contact__ = 'gpamfilis@gmail.com'
 
-# coding: utf-8
-
-<<<<<<< HEAD
-# In[ ]:
-
-
-import datetime
-
-
-# In[2]:
-
-import datetime 
-import dateutil.relativedelta
-dates = open("dates.txt","w")
-for i in range((2014-2009)*12):
-    now = datetime.datetime.now() 
-    before = now + dateutil.relativedelta.relativedelta(months=-i)
-    #print str(before)[0:7]
-    dates.write(str(before)[0:7])
-    dates.write("\n")
-dates.close()
-
-
-#### import urllib testfile = urllib.URLopener() testfile.retrieve(url, "file.txt")
-
-# In[3]:
-
-f = open("dates.txt")
-lines = f.readlines()
-print len(lines)
-f.close()
-#dd = lines[11:-10]
-
-
-# In[6]:
-
-'''
-data = open('2006-05.txt','w')
-for i in dd:
-    data.write(i)
-    data.write('\n')
-data.close()
-#data = lines[11:-10]
-'''
-
-
-# In[ ]:
-
-
-
-
-# In[7]:
-
-'''
-import urllib
-testfile = urllib.URLopener()
-
-a = open('dates.txt','r')
-lines = a.readlines()
-lenline = len(lines)
-a.close()
-    testfile.retrieve('http://penteli.meteo.gr/meteosearch/data/heraclion/'+'2006-05'+'.txt', "file.txt")
-'''
-
-
-# In[8]:
-
-
-
-
-# In[4]:
-
-import urllib
-import time
-testfile = urllib.URLopener()
-for i in range(len(lines)):
-    try:
-        testfile.retrieve('http://penteli.meteo.gr/meteosearch/data/chaniacenter/'+lines[i][0:-1]+'.txt', lines[i][0:-1]+'.txt')
-        #time.sleep(5)
-    except:
-        pass
-
-
-# In[128]:
-
-#pd.DataFrame(lines[11:])
-#pd.DataFrame.from_csv('file.txt', sep='\t')
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[36]:
-'''
-import urllib
-
-site = urllib.urlopen('http://penteli.meteo.gr/meteosearch/data/heraclion/2006-05.txt')
-site_data = site.read()
-'''
-
-# In[57]:
-
-
-
-
-# In[37]:
-
-
-
-
-# In[ ]:
-
-
-
-=======
 import datetime 
 import dateutil.relativedelta
 #with this we will call urllib.URLopener().retrieve(url,file.txt')
@@ -145,6 +11,11 @@ import os
 current_directory = os.getcwd() #the current directory
 urlseed = "http://penteli.meteo.gr/meteosearch/data/"
 list_of_stations_crete = ['aghiosnikolaos','alikianos','anogeia','askyfou','vrysses','heraclion','heraclionwest','heraclionport','ierapetra','lentas','metaxochori','moires','paleochora','plakias','pyrathi','rethymno','samaria','samariagorge','sitia','spili','sfakia','tzermiado','falasarna','finokalia','fourfouras','fragmapotamon','chania','chaniacenter']
+
+try:
+    os.mkdir('Gross Weather Data')
+except:
+    pass
 
 def dates_for_program(yearnow,yearfrom):
     """
@@ -170,20 +41,28 @@ def store_dates_in_list():
 def download_file_multiple_locations(lines,locations):
     testfile = urllib.URLopener()
     for location in locations:
+        os.mkdir(os.path.join(os.getcwd(),'Gross-Weather-Data')+'/'+location)
+        print location
         os.mkdir(location) #makes a directory for a location. once it completes the downloading of the files it creates another directory and so on.
         for i in range(len(lines)):
             try:
-                testfile.retrieve(urlseed + location + '/' + lines[i][0:-1] + '.txt',current_directory + '/' + location + '/' + location + '-' + lines[i][0:-1] + '.txt')
+                url = urlseed + location + '/' + lines[i][0:-1] + '.txt'
+                data_location = os.path.join(current_directory,'Gross-Weather-Data')
+                location_to_save_and_name_of_file = data_location + '/' + location +'/'+ location + '-' + lines[i][0:-1] + '.txt'
+                testfile.retrieve(url,location_to_save_and_name_of_file)
             except:
                 pass
     pass
 
 def download_file_single_location(lines,location):
-    os.mkdir(location)
+    os.mkdir(os.path.join(os.getcwd(),'Gross Weather Data')+'/'+location)
     testfile = urllib.URLopener()
     for i in range(len(lines)):         
         try:
-            testfile.retrieve(urlseed+location+'/'+lines[i][0:-1]+'.txt',current_directory+'/'+location+'/'+location+'-'+lines[i][0:-1]+'.txt')
+            url = urlseed + location + '/' + lines[i][0:-1] + '.txt' #this is the complete url to visit and download its contents
+            data_location = os.path.join(current_directory,'Gross Weather Data')
+            location_to_save_and_name_of_file = data_location + '/' + location +'/'+ location + '-' + lines[i][0:-1] + '.txt'
+            testfile.retrieve(url,location_to_save_and_name_of_file)
         except:
             pass
     pass
@@ -191,5 +70,5 @@ def download_file_single_location(lines,location):
 if __name__ == "__main__":
     dates_for_program(2014,2000)
     lines = store_dates_in_list()
-    download_file_multiple_locations(lines,list_of_stations_crete)
->>>>>>> d6b42b583204553b14fcea1f7923ac074d16d72a
+    download_file_multiple_locations(lines[0:10],list_of_stations_crete[1:1])
+
