@@ -67,7 +67,7 @@ def main(lines,locations):
     return None 
 
 if __name__ == "__main__":
-    lines =dates_for_program(2014,2000)
+    lines =dates_for_program(2015,2000)
     main(lines,list_of_stations_crete)         
     
 
