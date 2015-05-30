@@ -27,6 +27,9 @@ class MeteorologicalDataDownloader(object):
         self.locations = None
 
     def station_locations(self):
+        """
+        :rtype : list
+        """
         self.locations = pd.read_csv('Stations/crete_stations.txt')
 
     def dates_for_program(self):
