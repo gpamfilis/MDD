@@ -58,7 +58,7 @@ class MeteorologicalDataDownloader(object):
             os.chdir(raw_data_folder + '/' + station)
             print os.getcwd()
             for i, date in enumerate(self.dates_to_download):
-                name_to_save_file = os.getcwd() + '/' + date + '.txt'
+                name_to_save_file = os.getcwd() + '/' + station + '-' + date + '.txt'
                 try:
                     #  this is the complete url to visit and download its contents
                     url = url_seed + station + '/' + date + '.txt'

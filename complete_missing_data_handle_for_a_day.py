@@ -26,9 +26,12 @@ def correct_and_rename_files(stations):
             newfile = open(os.path.join(path,files[i][:-23]+'-'+'data_with_no_empty_days.txt'),'w')
             for line in lines:
                 try:
-                    if line
-                newfile.write(line)
-            newfile.close()
+                    if line:
+                        newfile.write(line)
+                    newfile.close()
+                except:
+                    pass
+                
     pass
 
 correct_and_rename_files(list_of_stations_crete)
