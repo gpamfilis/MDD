@@ -8,8 +8,10 @@ class EvapoTranspiration(object):
     """
     this class uses the pennman montif method for calculating ET0
     """
-    def __init__(self, max_temperature, min_temperature, rh_max, rh_min, elevation,
+    def __init__(self,lat, logn, max_temperature, min_temperature, rh_max, rh_min, elevation,
                  net_radiation_at_the_crop_surface, h):
+        self.lat = lat
+        self.log = logn
         self.max_temperature = max_temperature
         self.min_temperature = min_temperature
         self.mean_temperature = 0.5 * (self.min_temperature + self.max_temperature)  # degrees celsius
