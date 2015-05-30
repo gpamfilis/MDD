@@ -6,14 +6,17 @@ import datetime
 import dateutil.relativedelta
 import urllib 
 import os
+import pandas as pd
 
-current_directory = os.getcwd() #the current directory
-url_seed = "http://penteli.meteo.gr/meteosearch/data/" #this is the main url on which we add on other strings to navigate to the corresponding file
-list_of_stations_crete = ['aghiosnikolaos','alikianos','anogeia','askyfou','vrysses',
-                          'heraclion','heraclionwest','heraclionport','ierapetra','lentas','metaxochori','moires',
-                          'paleochora','plakias','pyrathi','rethymno','samaria','samariagorge','sitia','spili',
-                          'sfakia','tzermiado','falasarna','finokalia','fourfouras','fragmapotamon',
-                          'chania','chaniacenter']
+#the current directory
+current_directory = os.getcwd()
+# this is the main url on which we add on other strings to navigate to the corresponding file
+url_seed = "http://penteli.meteo.gr/meteosearch/data/"
+list_of_stations_crete = ['aghiosnikolaos', 'alikianos', 'anogeia', 'askyfou', 'vrysses',
+                          'heraclion', 'heraclionwest', 'heraclionport', 'ierapetra', 'lentas', 'metaxochori', 'moires',
+                          'paleochora', 'plakias', 'pyrathi', 'rethymno', 'samaria', 'samariagorge', 'sitia', 'spili',
+                          'sfakia', 'tzermiado', 'falasarna', 'finokalia', 'fourfouras', 'fragmapotamon',
+                          'chania', 'chaniacenter']
 
 raw_data_folder = 'Raw_Data'
 try:
@@ -22,11 +25,16 @@ except:
     pass
 
 
-class MeteorologicalDataDownloader():
+class MeteorologicalDataDownloader(object):
+
     def __init__(self, year_from, year_to):
         self.year_from = year_from
         self.year_to = year_to
         self.dates_to_download = []
+        self.locations = None
+
+    def station_locations(self):
+        self.locations = pd.read_csv('Stations/crete_stations.txt')
 
     def dates_for_program(self):
         """
@@ -34,51 +42,49 @@ class MeteorologicalDataDownloader():
         be stored from now to then. in a year-month format.
         """
         years = self.year_to - self.year_from  # number of years between now and then
-        for i in range((years-3)*12):
+        for i in range(years*12):
             now = datetime.datetime.now()
             before = now + dateutil.relativedelta.relativedelta(months=-i)
             self.dates_to_download.append(str(before)[0:7])
-
         return self.dates_to_download
 
+    def download_file_single_location(self):
+        """
+        this function will visit a url for a specific location, enter the date
+        and save the file to a specified directory
+        # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
+        """
+        for station in self.locations['stations'][:2]:
 
-def download_file_single_location(lines, location):
-    '''
-    this function will visit a url for a specific loacation,enter the date
-    and save the file to a specified directory
-    '''    
-    
-    try:
-        os.mkdir(os.path.join(os.getcwd(),raw_data_folder)+'/'+location)
-    except:
-        pass
-    testfile = urllib.URLopener()
-    for i in range(len(lines)):   
-        name_of_file = os.getcwd()+'/'+raw_data_folder+'/'+location + '/' +location + '-' + lines[i][0:-1] + '.txt'
-        try:
-            url = url_seed + location + '/' + lines[i][0:-1] + '.txt' #this is the complete url to visit and download its contents
-            testfile.retrieve(url,name_of_file)
-        except:
-            pass
-    pass
+            try:
+                os.mkdir(os.path.join(os.getcwd(), raw_data_folder)+'/'+station)
+            except:
+                print 'directory: {} all ready exists!!!'.format(station)
+                pass
+            testfile = urllib.URLopener()
+            os.chdir('Raw_Data' + '/' + station)
+            print os.getcwd()
+            for i, date in enumerate(self.dates_to_download):
+                name_to_save_file = os.getcwd() + '/' + date + '.txt'
+                try:
+                    #  this is the complete url to visit and download its contents
+                    url = url_seed + station + '/' + date + '.txt'
+                    testfile.retrieve(url, name_to_save_file)
 
-def main(lines,locations):
-    '''
-    this function will perform the same operation as download_file_single_location
-    but ovwr multiple location for a specified area.
-    '''
-    for location in locations:
-        print location
-        download_file_single_location(lines,location)
-    return None 
+                except:
+                    pass
+            os.chdir(os.pardir)
+            os.chdir(os.pardir)
 
 if __name__ == "__main__":
-    lines = MeteorologicalDataDownloader(2005, 2015).dates_for_program()
-    print lines[1]
+    mdd = MeteorologicalDataDownloader(2013, 2015)
+    mdd.dates_for_program()
+    mdd.station_locations()
+    mdd.download_file_single_location()
 
 
-    #main(lines, list_of_stations_crete)
-    
+
+
 
 
 
