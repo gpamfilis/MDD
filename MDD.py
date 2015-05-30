@@ -9,7 +9,11 @@ import os
 
 current_directory = os.getcwd() #the current directory
 url_seed = "http://penteli.meteo.gr/meteosearch/data/" #this is the main url on which we add on other strings to navigate to the corresponding file
-list_of_stations_crete = ['aghiosnikolaos','alikianos','anogeia','askyfou','vrysses','heraclion','heraclionwest','heraclionport','ierapetra','lentas','metaxochori','moires','paleochora','plakias','pyrathi','rethymno','samaria','samariagorge','sitia','spili','sfakia','tzermiado','falasarna','finokalia','fourfouras','fragmapotamon','chania','chaniacenter']
+list_of_stations_crete = ['aghiosnikolaos','alikianos','anogeia','askyfou','vrysses',
+                          'heraclion','heraclionwest','heraclionport','ierapetra','lentas','metaxochori','moires',
+                          'paleochora','plakias','pyrathi','rethymno','samaria','samariagorge','sitia','spili',
+                          'sfakia','tzermiado','falasarna','finokalia','fourfouras','fragmapotamon',
+                          'chania','chaniacenter']
 
 raw_data_folder = 'Raw_Data'
 try:
@@ -19,31 +23,26 @@ except:
 
 
 class MeteorologicalDataDownloader():
-    def __init__(self):
-        pass
+    def __init__(self, year_from, year_to):
+        self.year_from = year_from
+        self.year_to = year_to
+        self.dates_to_download = []
+
+    def dates_for_program(self):
+        """
+        this function will create a dates.txt file where the year and month will
+        be stored from now to then. in a year-month format.
+        """
+        years = self.year_to - self.year_from  # number of years between now and then
+        for i in range((years-3)*12):
+            now = datetime.datetime.now()
+            before = now + dateutil.relativedelta.relativedelta(months=-i)
+            self.dates_to_download.append(str(before)[0:7])
+
+        return self.dates_to_download
 
 
-
-def dates_for_program(year_to, year_from):
-    """
-    this function will create a dates.txt file where the year and month will
-    be stored from now to then. in a year-month format.
-    """
-    dates = open("dates.txt", "w")  # this opens a dates.txt file in write mode
-    years = year_to-year_from  # number of years between now and then
-    for i in range((years-3)*12):  # multiply by 12 because of the months in a year i dont know yet why i have to subtract at least one but anyway 8)
-        now = datetime.datetime.now()  # this is the datetime of today
-        before = now + dateutil.relativedelta.relativedelta(months=-i)
-        dates.write(str(before)[0:7])  # convert the date to a string and remove the day part
-        dates.write("\n")
-    dates.close()
-    f = open('dates.txt')
-    lines = f.readlines()
-    f.close()    
-    return lines
-
-
-def download_file_single_location(lines,location):
+def download_file_single_location(lines, location):
     '''
     this function will visit a url for a specific loacation,enter the date
     and save the file to a specified directory
@@ -55,7 +54,7 @@ def download_file_single_location(lines,location):
         pass
     testfile = urllib.URLopener()
     for i in range(len(lines)):   
-        name_of_file = os.getcwd()+'/'+raw_data_folder+'/'+location +'/' +location + '-' + lines[i][0:-1] + '.txt'
+        name_of_file = os.getcwd()+'/'+raw_data_folder+'/'+location + '/' +location + '-' + lines[i][0:-1] + '.txt'
         try:
             url = url_seed + location + '/' + lines[i][0:-1] + '.txt' #this is the complete url to visit and download its contents
             testfile.retrieve(url,name_of_file)
@@ -74,8 +73,11 @@ def main(lines,locations):
     return None 
 
 if __name__ == "__main__":
-    lines = dates_for_program(2015, 2000)
-    main(lines, list_of_stations_crete)
+    lines = MeteorologicalDataDownloader(2005, 2015).dates_for_program()
+    print lines[1]
+
+
+    #main(lines, list_of_stations_crete)
     
 
 
