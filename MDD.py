@@ -3,22 +3,15 @@ __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
 import datetime 
-import dateutil.relativedelta
-import urllib 
+import urllib
 import os
 import pandas as pd
+import dateutil.relativedelta
 
-#the current directory
-current_directory = os.getcwd()
-# this is the main url on which we add on other strings to navigate to the corresponding file
+
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
-list_of_stations_crete = ['aghiosnikolaos', 'alikianos', 'anogeia', 'askyfou', 'vrysses',
-                          'heraclion', 'heraclionwest', 'heraclionport', 'ierapetra', 'lentas', 'metaxochori', 'moires',
-                          'paleochora', 'plakias', 'pyrathi', 'rethymno', 'samaria', 'samariagorge', 'sitia', 'spili',
-                          'sfakia', 'tzermiado', 'falasarna', 'finokalia', 'fourfouras', 'fragmapotamon',
-                          'chania', 'chaniacenter']
+raw_data_folder = 'RAW_DATA'
 
-raw_data_folder = 'Raw_Data'
 try:
     os.mkdir(raw_data_folder)
 except:
@@ -62,7 +55,7 @@ class MeteorologicalDataDownloader(object):
                 print 'directory: {} all ready exists!!!'.format(station)
                 pass
             testfile = urllib.URLopener()
-            os.chdir('Raw_Data' + '/' + station)
+            os.chdir(raw_data_folder + '/' + station)
             print os.getcwd()
             for i, date in enumerate(self.dates_to_download):
                 name_to_save_file = os.getcwd() + '/' + date + '.txt'
