@@ -54,6 +54,7 @@ class MeteorologicalDataDownloader(object):
             try:
                 os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)
             except:
+                # add logging
                 print('directory: {} all ready exists!!!'.format(station))
                 pass
             testfile = URLopener()
@@ -65,7 +66,6 @@ class MeteorologicalDataDownloader(object):
                     #  this is the complete url to visit and download its contents
                     url = url_seed + station + '/' + date + '.txt'
                     testfile.retrieve(url, name_to_save_file)
-
                 except:
                     pass
             os.chdir(os.pardir)
