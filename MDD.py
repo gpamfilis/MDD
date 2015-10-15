@@ -3,7 +3,7 @@ __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
 import datetime 
-import urllib
+from urllib.request import URLopener
 import os
 import pandas as pd
 import dateutil.relativedelta
@@ -30,7 +30,7 @@ class MeteorologicalDataDownloader(object):
         """
         :rtype : list
         """
-        self.locations = pd.read_csv('Stations/crete_stations.txt')
+        self.locations = pd.read_csv('crete.txt')
 
     def dates_for_program(self):
         """
@@ -55,11 +55,11 @@ class MeteorologicalDataDownloader(object):
             try:
                 os.mkdir(os.path.join(os.getcwd(), raw_data_folder)+'/'+station)
             except:
-                print 'directory: {} all ready exists!!!'.format(station)
+                print('directory: {} all ready exists!!!'.format(station))
                 pass
-            testfile = urllib.URLopener()
+            testfile = URLopener()
             os.chdir(raw_data_folder + '/' + station)
-            print os.getcwd()
+            print(os.getcwd())
             for i, date in enumerate(self.dates_to_download):
                 name_to_save_file = os.getcwd() + '/' + station + '-' + date + '.txt'
                 try:
