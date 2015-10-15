@@ -2,6 +2,7 @@ __author__ = 'gpamfilis'
 __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
+import shutil
 import datetime 
 from urllib.request import URLopener
 import os
@@ -11,10 +12,6 @@ from utilities import filter_out
 
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
 data_folder = 'data'
-
-#  http://stackoverflow.com/questions/273192/in-python-check-if-a-directory-exists-and-create-it-if-necessary
-if not os.path.exists(data_folder):
-    os.makedirs(data_folder)
 
 
 class MeteorologicalDataDownloader(object):
@@ -72,19 +69,20 @@ class MeteorologicalDataDownloader(object):
             os.chdir(os.pardir)
 
 if __name__ == "__main__":
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+    else:
+        shutil.rmtree(data_folder)
+        os.makedirs(data_folder)
     mdd = MeteorologicalDataDownloader(2000, 2015)
     mdd.dates_for_program()
     mdd.station_locations()
     mdd.download_file_single_location()
     filter_out()
 
-
-
-
-
-
-
-
+# bibliography:
+#  http://stackoverflow.com/questions/273192/in-python-check-if-a-directory-exists-and-create-it-if-necessary
+#  http://stackoverflow.com/questions/303200/how-do-i-remove-delete-a-folder-that-is-not-empty-with-python
 
 
 
