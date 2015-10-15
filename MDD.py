@@ -1,4 +1,4 @@
-__author__  = 'George Pamfilis'
+__author__ = 'gpamfilis'
 __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
@@ -26,15 +26,15 @@ class MeteorologicalDataDownloader(object):
         self.dates_to_download = []
         self.locations = None
 
-    def station_locations(self):
+    def station_locations(self, station='crete'):
         """
         :rtype : list
         """
-        self.locations = pd.read_csv('stations/crete.txt')
+        self.locations = pd.read_csv('stations/'+station+'.txt')
 
     def dates_for_program(self):
         """
-        this function will create a dates.txt file where the year and month will
+        this method will create a dates.txt file where the year and month will
         be stored from now to then. in a year-month format.
         """
         years = self.year_to - self.year_from  # number of years between now and then
