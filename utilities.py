@@ -2,7 +2,6 @@ __author__ = 'George Pamfilis'
 __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
-import pandas as pd
 import os
 
 
@@ -31,6 +30,3 @@ def filter_out():
                 data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'w')
                 data_file.writelines(useful_content)
                 data_file.close()
-
-
-filter_out()

@@ -7,7 +7,7 @@ from urllib.request import URLopener
 import os
 import pandas as pd
 import dateutil.relativedelta
-
+from utilities import filter_out
 
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
 data_folder = 'data'
@@ -76,6 +76,7 @@ if __name__ == "__main__":
     mdd.dates_for_program()
     mdd.station_locations()
     mdd.download_file_single_location()
+    filter_out()
 
 
 
