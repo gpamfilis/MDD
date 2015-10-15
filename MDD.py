@@ -10,10 +10,10 @@ import dateutil.relativedelta
 
 
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
-raw_data_folder = 'RAW_DATA'
+data_folder = 'data'
 
 try:
-    os.mkdir(raw_data_folder)
+    os.mkdir(data_folder)
 except:
     pass
 
@@ -30,7 +30,7 @@ class MeteorologicalDataDownloader(object):
         """
         :rtype : list
         """
-        self.locations = pd.read_csv('crete.txt')
+        self.locations = pd.read_csv('stations/crete.txt')
 
     def dates_for_program(self):
         """
@@ -53,12 +53,12 @@ class MeteorologicalDataDownloader(object):
         for station in self.locations['stations'][:2]:
 
             try:
-                os.mkdir(os.path.join(os.getcwd(), raw_data_folder)+'/'+station)
+                os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)
             except:
                 print('directory: {} all ready exists!!!'.format(station))
                 pass
             testfile = URLopener()
-            os.chdir(raw_data_folder + '/' + station)
+            os.chdir(data_folder + '/' + station)
             print(os.getcwd())
             for i, date in enumerate(self.dates_to_download):
                 name_to_save_file = os.getcwd() + '/' + station + '-' + date + '.txt'
