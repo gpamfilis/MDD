@@ -12,10 +12,9 @@ import dateutil.relativedelta
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
 data_folder = 'data'
 
-try:
-    os.mkdir(data_folder)
-except:
-    pass
+#  http://stackoverflow.com/questions/273192/in-python-check-if-a-directory-exists-and-create-it-if-necessary
+if not os.path.exists(data_folder):
+    os.makedirs(data_folder)
 
 
 class MeteorologicalDataDownloader(object):
@@ -73,7 +72,7 @@ class MeteorologicalDataDownloader(object):
             os.chdir(os.pardir)
 
 if __name__ == "__main__":
-    mdd = MeteorologicalDataDownloader(2013, 2015)
+    mdd = MeteorologicalDataDownloader(2000, 2015)
     mdd.dates_for_program()
     mdd.station_locations()
     mdd.download_file_single_location()
