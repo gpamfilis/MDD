@@ -3,7 +3,7 @@ This program will download meteorological data from the meteo.gr website.
 to run it simply navigate through the command line or terminal to the
 directory where the directory of the code is located. and type "python MDD.py"
 
-Note:
+Note:d
 
 Recomended: have anaconda python 3.5 installed
 
