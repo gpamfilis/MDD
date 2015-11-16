@@ -5,7 +5,7 @@ __contact__ = 'gpamfilis@gmail.com'
 import shutil
 import datetime 
 from urllib.request import URLopener
-import os
+import os, sys
 import pandas as pd
 import dateutil.relativedelta
 from utilities import filter_out
@@ -46,7 +46,7 @@ class MeteorologicalDataDownloader(object):
         and save the file to a specified directory
         # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
         """
-        for station in self.locations['stations'][:2]:
+        for station in self.locations['stations']:  # add a way to choose the stations
 
             try:
                 os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)
