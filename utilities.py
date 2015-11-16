@@ -10,7 +10,7 @@ def filter_out():
     for station_i in range(len(stations)):
         dates = os.listdir('./data/'+stations[station_i])  # iterate over the stations
         for j in range(len(dates)):
-            data_file = open('./data/'+stations[station_i]+'/'+dates[j])
+            data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'r')
             data_file_content = data_file.readlines()
             data_file.close()
             index_of_dash = []
