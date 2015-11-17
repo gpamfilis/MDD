@@ -38,3 +38,6 @@ def add_dates_to_first_column():
     pass
 
 
+def merge_all_files_within_a_a_location():
+    pass
+
