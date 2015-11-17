@@ -4,7 +4,7 @@ __contact__ = 'gpamfilis@gmail.com'
 
 '''
 the logic is:
-    1. filter out unnedded rows.
+    1. filter out unneeded rows.
     2. add the complete date to each row in the day column
     3. merge each station such as "alikianos" in its own directory
     4. add a header file to each merged location.
@@ -14,7 +14,7 @@ import os
 
 
 def filter_out():
-    stations = os.listdir('./data')
+    stations = os.listdir('./data')  # not a good idea. i should be able to choose the location
     for station_i in range(len(stations)):
         dates = os.listdir('./data/'+stations[station_i])  # iterate over the stations
         for j in range(len(dates)):

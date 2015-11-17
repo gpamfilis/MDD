@@ -13,6 +13,11 @@ from utilities import filter_out
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
 data_folder = 'data'
 
+'''
+must change the location referring to for example "crete"
+while the station referring to a station. now its mixed up.
+'''
+
 
 class MeteorologicalDataDownloader(object):
 
