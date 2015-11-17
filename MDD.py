@@ -69,15 +69,15 @@ class MeteorologicalDataDownloader(object):
             os.chdir(os.pardir)
 
 if __name__ == "__main__":
-    if not os.path.exists(data_folder):
-        os.makedirs(data_folder)
-    else:
-        shutil.rmtree(data_folder)
-        os.makedirs(data_folder)
-    mdd = MeteorologicalDataDownloader(2000, 2015)
-    mdd.dates_for_program()
-    mdd.station_locations()
-    mdd.download_file_single_location()
+    # if not os.path.exists(data_folder):
+    #     os.makedirs(data_folder)
+    # else:
+    #     shutil.rmtree(data_folder)
+    #     os.makedirs(data_folder)
+    # mdd = MeteorologicalDataDownloader(2000, 2015)
+    # mdd.dates_for_program()
+    # mdd.station_locations()
+    # mdd.download_file_single_location()
     filter_out()
 
 # bibliography:
