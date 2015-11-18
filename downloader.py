@@ -27,12 +27,8 @@ class MeteorologicalDataDownloader(object):
         self.dates_to_download = []
         self.locations = None
         self.station = station
-
-    def station_locations(self):
-        """
-        :rtype : list
-        """
         self.locations = pd.read_csv('stations/'+self.station+'.txt')
+
 
     def dates_for_program(self):
         """
@@ -81,7 +77,6 @@ if __name__ == "__main__":
         os.makedirs(data_folder)
     mdd = MeteorologicalDataDownloader(2000, 2015)
     mdd.dates_for_program()
-    mdd.station_locations()
     mdd.download_file_single_location()
 
 

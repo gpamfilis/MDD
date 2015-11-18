@@ -4,6 +4,7 @@ This program will download meteorological data from the meteo.gr website.
 
 what it does so far:
 
+    1. it downloads from a list of stations in a location
     1. it filters out headers and footers
     2. removes empty files
 
