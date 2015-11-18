@@ -9,9 +9,11 @@ to run:
 
     2. in the terminal type:python clean_up.py
 
-Note: tested on a windows 7 machine (64 bit), mac 10.9.5
+Note: tested on the following:
+    1. A windows 7 machine (64 bit)
+    2. mac 10.9.5
 
-Recommended: have anaconda python 3.5 installed
+Recommended:  have anaconda python 3.5 installed
 
 if not simply install:
     python 3.5
