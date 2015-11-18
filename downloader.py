@@ -1,14 +1,14 @@
+import shutil
+import datetime
+from urllib.request import URLopener
+import dateutil.relativedelta
+from utilities import *
+
 __author__ = 'gpamfilis'
 __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
-import shutil
-import datetime 
-from urllib.request import URLopener
-import os, sys
-import pandas as pd
-import dateutil.relativedelta
-from utilities import *
+
 
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
 data_folder = 'data'
@@ -52,7 +52,7 @@ class MeteorologicalDataDownloader(object):
         and save the file to a specified directory
         # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
         """
-        for station in self.locations['stations'][:6]:
+        for station in self.locations['stations']:
             try:
                 os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)
             except:
@@ -79,7 +79,6 @@ if __name__ == "__main__":
     else:
         shutil.rmtree(data_folder)
         os.makedirs(data_folder)
-    # del_orig = sys.argv[1]
     mdd = MeteorologicalDataDownloader(2000, 2015)
     mdd.dates_for_program()
     mdd.station_locations()

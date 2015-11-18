@@ -1,7 +1,6 @@
-__author__ = 'gpamfilis'
-
-
 from utilities import *
+
+__author__ = 'gpamfilis'
 
 if __name__ == '__main__':
     filter_out()
@@ -12,4 +11,3 @@ if __name__ == '__main__':
     # else:
     #     merge_all_files_within_a_location(delete_originals=0)
     # merge_all_files_within_a_location()
-    pass
