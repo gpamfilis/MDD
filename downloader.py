@@ -52,7 +52,7 @@ class MeteorologicalDataDownloader(object):
         and save the file to a specified directory
         # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
         """
-        for station in self.locations['stations']:
+        for station in self.locations['stations'][:8]:
             try:
                 os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)
             except:
