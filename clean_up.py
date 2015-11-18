@@ -1,9 +1,8 @@
 __author__ = 'gpamfilis'
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+
 from utilities import *
+
 if __name__ == '__main__':
     filter_out()
     remove_empty_files()
