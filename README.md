@@ -12,13 +12,16 @@ to run:
     
         you are done!!!
 
-Note: tested on the following:
+NOTE: 
+tested on the following operating systems:
+
     1. A windows 7 machine (64 bit)
     2. mac 10.9.5
 
 Recommended:  have anaconda python 3.5 installed
 
 if not simply install:
+
     python 3.5
     pandas
 
