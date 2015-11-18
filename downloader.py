@@ -9,7 +9,6 @@ __version__ = '1.0'
 __contact__ = 'gpamfilis@gmail.com'
 
 
-
 url_seed = "http://penteli.meteo.gr/meteosearch/data/"
 data_folder = 'data'
 
@@ -21,14 +20,13 @@ while the station referring to a station. now its mixed up.
 
 class MeteorologicalDataDownloader(object):
 
-    def __init__(self, year_from, year_to, station='crete'):
+    def __init__(self, year_from=2000, year_to=2015, station='crete'):
         self.year_from = year_from
         self.year_to = year_to
         self.dates_to_download = []
         self.locations = None
         self.station = station
         self.locations = pd.read_csv('stations/'+self.station+'.txt')
-
 
     def dates_for_program(self):
         """
@@ -48,9 +46,9 @@ class MeteorologicalDataDownloader(object):
         and save the file to a specified directory
         # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
         """
-        for station in self.locations['stations'][:8]:
+        for station in self.locations['stations']:
             try:
-                os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)
+                os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)  # messy!!!
             except:
                 # add logging
                 print('directory: {} all ready exists!!!'.format(station))
@@ -69,15 +67,18 @@ class MeteorologicalDataDownloader(object):
             os.chdir(os.pardir)
             os.chdir(os.pardir)
 
+    def main(self):
+        if not os.path.exists(data_folder):
+            os.makedirs(data_folder)
+        else:
+            shutil.rmtree(data_folder)
+        os.makedirs(data_folder)
+        self.dates_for_program()
+        self.download_file_single_location()
+
 if __name__ == "__main__":
-    if not os.path.exists(data_folder):
-        os.makedirs(data_folder)
-    else:
-        shutil.rmtree(data_folder)
-        os.makedirs(data_folder)
     mdd = MeteorologicalDataDownloader(2000, 2015)
-    mdd.dates_for_program()
-    mdd.download_file_single_location()
+    mdd.main()
 
 
 

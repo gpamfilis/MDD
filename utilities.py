@@ -107,31 +107,31 @@ def merge_all_files_within_a_location(delete_originals=False):
 # merge_all_files_within_a_location(delete_originals=1)
 
 
-def add_complete_dates_location_station2(location_geo='crete'):
-    stations = os.listdir('./data')
-    for station in stations:
-        dates = os.listdir('./data/' + station)
-        for date in dates:
-            f = open('./data/' + station + '/' + date, encoding='cp737')
-            lines = f.readlines()
-            f.close()
-
-            data_df = pd.read_csv('./data/' + station + '/' + date, header=None, delim_whitespace=True, skip_blank_lines=1)
-            # station_ = []
-            # location_ = []
-            # for s in range(data_df.shape[0]):
-            #     station_.append(station)
-            #     location_.append(location_geo)
-            # for i in range(data_df.shape[0]):
-            #     if len(str(data_df[0][i])) == 1:
-            #         data_df[0][i] = date[-11:-4]+'-0'+str(data_df[0][i])
-            #     else:
-            #         data_df[0][i] = date[-11:-4]+'-'+str(data_df[0][i])
-            # empty_column = np.zeros(data_df.shape[0])
-            # for i, a in enumerate(['geo_location', 'station']):
-            #     data_df.insert(i, a, value=empty_column)
-            # data_df['geo_location'] = location_
-            # data_df['station'] = station_
-            # data_df.to_csv('./data/' + station + '/' + date, index=None, header=None)
-
-# add_complete_dates_location_station2()
+# def add_complete_dates_location_station2(location_geo='crete'):
+#     stations = os.listdir('./data')
+#     for station in stations:
+#         dates = os.listdir('./data/' + station)
+#         for date in dates:
+#             f = open('./data/' + station + '/' + date, encoding='cp737')
+#             lines = f.readlines()
+#             f.close()
+#
+#             data_df = pd.read_csv('./data/' + station + '/' + date, header=None, delim_whitespace=True, skip_blank_lines=1)
+#             # station_ = []
+#             # location_ = []
+#             # for s in range(data_df.shape[0]):
+#             #     station_.append(station)
+#             #     location_.append(location_geo)
+#             # for i in range(data_df.shape[0]):
+#             #     if len(str(data_df[0][i])) == 1:
+#             #         data_df[0][i] = date[-11:-4]+'-0'+str(data_df[0][i])
+#             #     else:
+#             #         data_df[0][i] = date[-11:-4]+'-'+str(data_df[0][i])
+#             # empty_column = np.zeros(data_df.shape[0])
+#             # for i, a in enumerate(['geo_location', 'station']):
+#             #     data_df.insert(i, a, value=empty_column)
+#             # data_df['geo_location'] = location_
+#             # data_df['station'] = station_
+#             # data_df.to_csv('./data/' + station + '/' + date, index=None, header=None)
+#
+# # add_complete_dates_location_station2()
