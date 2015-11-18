@@ -2,6 +2,16 @@
 
 This program will download meteorological data from the meteo.gr website.
 
+what it does so far:
+
+    1. it filters out headers and footers
+    2. removes empty files
+
+tasks:
+
+    1. add nan to missing day values
+
+
 to run:
 
     1. in the terminal type:python downloader.py
