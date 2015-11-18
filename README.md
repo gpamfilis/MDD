@@ -3,11 +3,14 @@
 This program will download meteorological data from the meteo.gr website.
 
 to run:
+
     1. in the terminal type:python downloader.py
 
-         once completed...
+        once completed...
 
     2. in the terminal type:python clean_up.py
+    
+        you are done!!!
 
 Note: tested on the following:
     1. A windows 7 machine (64 bit)
