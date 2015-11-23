@@ -31,8 +31,6 @@ def filter_out():
             for i, line in enumerate(data_file_content):
                 if '-' in line:
                     index_of_dash.append(i)
-            # print(len(index_of_dash))
-            # print(index_of_dash)
             if len(index_of_dash) == 0:
                 pass
             elif len(index_of_dash) == 4:
@@ -60,8 +58,14 @@ def remove_empty_files():
                 os.remove('./data/' + station + '/' + date)
 
 
+def convert_to_csv_format():
+    pass
+
+
 def fill_in_empty_days_with_nan():
     pass
+
+
 
 
 def add_complete_dates_location_station(location_geo='crete'):
@@ -86,6 +90,7 @@ def add_complete_dates_location_station(location_geo='crete'):
             data_df['geo_location'] = location_
             data_df['station'] = station_
             data_df.to_csv('./data/' + station + '/' + date, index=None, header=None)
+
 
 
 def merge_all_files_within_a_location(delete_originals=False):
@@ -135,3 +140,6 @@ def merge_all_files_within_a_location(delete_originals=False):
 #             # data_df.to_csv('./data/' + station + '/' + date, index=None, header=None)
 #
 # # add_complete_dates_location_station2()
+
+
+# http://stackoverflow.com/questions/1157106/remove-all-occurences-of-a-value-from-a-python-list
