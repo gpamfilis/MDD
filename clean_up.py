@@ -1,12 +1,12 @@
 
-from utilities import *
+from utilities import filter_out, remove_empty_and_dirty_files
 
 __author__ = 'gpamfilis'
 
 
 if __name__ == '__main__':
     filter_out()
-    remove_empty_files()
+    remove_empty_and_dirty_files()
 
     #add_complete_dates_location_station()
     # if del_orig == 'del_orig':

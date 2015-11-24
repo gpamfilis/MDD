@@ -46,7 +46,7 @@ class MeteorologicalDataDownloader(object):
         and save the file to a specified directory
         # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
         """
-        for station in self.locations['stations'][:2]:
+        for station in self.locations['stations']:
             try:
                 os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)  # messy!!!
             except:
@@ -81,10 +81,9 @@ if __name__ == "__main__":
     mdd.main()
 
 
-
 # bibliography:
-#  http://stackoverflow.com/questions/273192/in-python-check-if-a-directory-exists-and-create-it-if-necessary
-#  http://stackoverflow.com/questions/303200/how-do-i-remove-delete-a-folder-that-is-not-empty-with-python
+# http://stackoverflow.com/questions/273192/in-python-check-if-a-directory-exists-and-create-it-if-necessary
+# http://stackoverflow.com/questions/303200/how-do-i-remove-delete-a-folder-that-is-not-empty-with-python
 
 
 

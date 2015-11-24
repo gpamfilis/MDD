@@ -22,12 +22,10 @@ def filter_out():
     for station_i in range(len(stations)):
         dates = os.listdir('./data/'+stations[station_i])  # iterate over the stations
         for j in range(len(dates)):
-            # print(dates[j])
             data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'r', encoding='cp737')
             data_file_content = data_file.readlines()
             data_file.close()
             index_of_dash = []
-            # print('stuff 1')
             for i, line in enumerate(data_file_content):
                 if '-' in line:
                     index_of_dash.append(i)
@@ -45,17 +43,22 @@ def filter_out():
                 data_file.close()
 
 
-def remove_empty_files():
+def remove_empty_and_dirty_files():
     stations = os.listdir('./data')
     for station in stations:
         dates = os.listdir('./data/' + station)
         for date in dates:
-            f = open('./data/' + station + '/' + date, encoding='cp737')
-            lines = f.readlines()
-            f.close()
-            if len(lines) == 0:
-                print('deleting empty data files: ', date)
-                os.remove('./data/' + station + '/' + date)
+            try:  # try to read it
+                f = open('./data/' + station + '/' + date)
+                lines = f.readlines()
+                f.close()
+                if len(lines) == 0:
+                    print('deleting empty data files: ', date)
+                    os.remove('./data/' + station + '/' + date)
+            except:
+                print('CANNOT DECODE DATA WHEN OPENING FILE WITHOUT SPECIFYING ENCODING (it should there are '
+                      'only numbers', './data/' + station + '/' + date)
+                os.remove('./data/' + station + '/' + date)  # instead of deleting move them to a discard directory
 
 
 def convert_to_csv_format():
@@ -64,8 +67,6 @@ def convert_to_csv_format():
 
 def fill_in_empty_days_with_nan():
     pass
-
-
 
 
 def add_complete_dates_location_station(location_geo='crete'):
@@ -90,7 +91,6 @@ def add_complete_dates_location_station(location_geo='crete'):
             data_df['geo_location'] = location_
             data_df['station'] = station_
             data_df.to_csv('./data/' + station + '/' + date, index=None, header=None)
-
 
 
 def merge_all_files_within_a_location(delete_originals=False):
