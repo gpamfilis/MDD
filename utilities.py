@@ -1,4 +1,4 @@
-import os, re
+import os
 import pandas as pd
 import numpy as np
 pd.options.mode.chained_assignment = None  # default='warn' source:stackexchange
@@ -81,6 +81,17 @@ def convert_to_csv_format():
                         print('complete failure')
 
 
+def add_header_to_all():
+    default_header = pd.read_csv('data_header.txt',header=None)[0].values
+    stations = os.listdir('./data')
+    for station in stations:
+        print(station)
+        dates = os.listdir('./data/' + station)
+        for date in dates:
+            df = pd.read_csv('./data/' + station + '/' + date, header=None)
+            df.to_csv('./data/' + station + '/' + date,header = default_header,index=None)
+
+
 def fill_in_empty_days_with_nan():
     pass
 
@@ -88,42 +99,42 @@ def fill_in_empty_days_with_nan():
 def add_complete_dates_location_station(location_geo='crete'):
     stations = os.listdir('./data')
     for station in stations:
+        print(station)
         dates = os.listdir('./data/' + station)
-        for date in dates:
-            data_df = pd.read_csv('./data/' + station + '/' + date, header=None, delim_whitespace=True)
-            station_ = []
-            location_ = []
-            for s in range(data_df.shape[0]):
-                station_.append(station)
-                location_.append(location_geo)
-            for i in range(data_df.shape[0]):
-                if len(str(data_df[0][i])) == 1:
-                    data_df[0][i] = date[-11:-4]+'-0'+str(data_df[0][i])
+        for i, date in enumerate(dates):
+            print(round(i/len(dates)*100,2))
+            data_df = pd.read_csv('./data/' + station + '/' + date)
+            empty_dfs = pd.DataFrame(np.zeros((data_df.shape[0], 2)))
+            data_df = pd.concat([empty_dfs, data_df], axis=1)
+            data_df.columns = ['location', 'station'] + list(data_df.columns.values)[2:]  # just change two first two 
+            data_df['location'] = location_geo
+            data_df['station'] = station
+            for i, day in enumerate(data_df['date']):
+                if len(str(data_df['date'][i])) == 1:
+                    data_df['date'][i] = date[-11:-4]+'-0'+str(data_df['date'][i])
                 else:
-                    data_df[0][i] = date[-11:-4]+'-'+str(data_df[0][i])
-            empty_column = np.zeros(data_df.shape[0])
-            for i, a in enumerate(['geo_location', 'station']):
-                data_df.insert(i, a, value=empty_column)
-            data_df['geo_location'] = location_
-            data_df['station'] = station_
-            data_df.to_csv('./data/' + station + '/' + date, index=None, header=None)
+                    data_df['date'][i] = date[-11:-4]+'-'+str(data_df['date'][i])
+            data_df.to_csv('./data/' + station + '/' + date, index=None)
 
 
-def merge_all_files_within_a_location(delete_originals=False):
-    for location in os.listdir('./data'):
-        files = os.listdir('./data/'+location)
-        f = open('./data/' + '/' + location + '/' + 'merged_'+location+'.txt', 'w')
+def merge_all_files_within_a_station(delete_originals=False):
+    for station in os.listdir('./data'):
+        files = os.listdir('./data/'+station)
+        f = open('./data/' + '/' + station + '/' + 'merged_'+station+'.txt', 'w')
         for fi in files:
-            lines = open('./data/' + '/' + location + '/'+fi).readlines()
+            lines = open('./data/' + '/' + station + '/'+fi).readlines()[1:]
             for i in range(len(lines)):
                 f.write(lines[i])
         f.close()
+        df = pd.read_csv('./data/' + '/' + station + '/' + 'merged_'+station+'.txt', header=None)
+        header = ['location', 'station'] + list(pd.read_csv('data_header.txt').values)
+        df.to_csv('./data/' + '/' + station + '/' + 'merged_'+station+'.txt', index=None, header=header)
         if delete_originals:
             for fi in files:
-                os.remove('./data/' + '/' + location + '/'+fi)
+                os.remove('./data/' + '/' + station + '/'+fi)
         else:
             pass
-        pass
+        
 
 # merge_all_files_within_a_location(delete_originals=1)
 
