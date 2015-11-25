@@ -62,7 +62,23 @@ def remove_empty_and_dirty_files():
 
 
 def convert_to_csv_format():
-    pass
+    stations = os.listdir('./data')
+    for station in stations:
+        print(station)
+        dates = os.listdir('./data/' + station)
+        for date in dates:
+            try:
+                df = pd.read_csv('./data/' + station + '/' + date, delim_whitespace=1,header=None)
+                df.to_csv('./data/' + station + '/' + date,header = None,index=None)
+            except:
+                for i in np.arange(1,31,1):
+                    try:
+                        df = pd.read_csv('./data/' + station + '/' + date, skiprows=i,
+                                         delim_whitespace=1,header=None)
+                        df.to_csv('./data/' + station + '/' + date,header = None,index=None)
+                        break
+                    except:
+                        print('complete failure')
 
 
 def fill_in_empty_days_with_nan():
