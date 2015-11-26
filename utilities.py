@@ -18,13 +18,16 @@ the logic is:
 '''
 
 
-def filter_out():
+def filter_out_header_and_footer():
+    print('\n FILTERING OUT HEADER AND FOOTER')
     stations = os.listdir('./data')  # not a good idea. i should be able to choose the location
     for station_i in range(len(stations)):
+        print(stations[station_i])
         dates = os.listdir('./data/'+stations[station_i])  # iterate over the stations
         for j in range(len(dates)):
+            print(dates[j])
             data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'r', encoding='cp737')
-            data_file_content = data_file.readlines()
+            data_file_content = data_file.readlines()[8:-8]
             data_file.close()
             index_of_dash = []
             for i, line in enumerate(data_file_content):
@@ -32,19 +35,25 @@ def filter_out():
                     index_of_dash.append(i)
             if len(index_of_dash) == 0:
                 pass
-            elif len(index_of_dash) == 4:
-                useful_content = data_file_content[index_of_dash[1]+1:index_of_dash[2]]
+            if len(index_of_dash)>=2:
+                useful_content = data_file_content[index_of_dash[0]+1:index_of_dash[-1]]
                 data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'w', encoding='cp737')
                 data_file.writelines(useful_content)
                 data_file.close()
-            else:
-                useful_content = data_file_content[index_of_dash[0]+1:index_of_dash[1]]
-                data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'w', encoding='cp737')
-                data_file.writelines(useful_content)
-                data_file.close()
+#             elif len(index_of_dash) == 4:
+#                 useful_content = data_file_content[index_of_dash[1]+1:index_of_dash[2]]
+#                 data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'w', encoding='cp737')
+#                 data_file.writelines(useful_content)
+#                 data_file.close()
+#             else:
+#                 useful_content = data_file_content[index_of_dash[0]+1:index_of_dash[1]]
+#                 data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'w', encoding='cp737')
+#                 data_file.writelines(useful_content)
+#                 data_file.close()
 
 
 def remove_empty_and_dirty_files():
+    print('\n REMOVING EMPTY AND DIRTY FILES')
     stations = os.listdir('./data')
     for station in stations:
         dates = os.listdir('./data/' + station)
@@ -62,7 +71,19 @@ def remove_empty_and_dirty_files():
                 os.remove('./data/' + station + '/' + date)  # instead of deleting move them to a discard directory
 
 
+def remove_single_column_files():
+    print('\n CONVERTING TO CSV FORMAT')
+    stations = os.listdir('./data')
+    for station in stations:
+        print(station)
+        dates = os.listdir('./data/' + station)
+        for date in dates:
+            pass
+
+
+
 def convert_to_csv_format():
+    print('\n CONVERTING TO CSV FORMAT')
     stations = os.listdir('./data')
     for station in stations:
         print(station)
@@ -83,6 +104,7 @@ def convert_to_csv_format():
 
 
 def add_header_to_all_dayly_files():
+    print('\n ADDING A HEADER TO THE DAYLY FILES')
     default_header = pd.read_csv('default_data_header.txt',header=None)[0].values
     stations = os.listdir('./data')
     for station in stations:
@@ -98,6 +120,7 @@ def fill_in_empty_days_with_nan():
 
 
 def add_complete_dates_location_station(location_geo='crete'):
+    print('\n ADDING NEW COLUMNS LOCATION, STATION, AND FULL DATE')
     stations = os.listdir('./data')
     for station in stations:
         print(station)
@@ -117,24 +140,31 @@ def add_complete_dates_location_station(location_geo='crete'):
             data_df.to_csv('./data/' + station + '/' + date, index=None)
 
 
-def merge_all_files_within_a_station(delete_originals=False):
-    for station in os.listdir('./data'):
-        files = os.listdir('./data/'+station)
-        f = open('./data/' + '/' + station + '/' + 'merged_'+station+'.txt', 'w')
-        for fi in files:
-            lines = open('./data/' + '/' + station + '/'+fi).readlines()[1:]
-            for i in range(len(lines)):
-                f.write(lines[i])
-        f.close()
-        if delete_originals:
-            for fi in files:
-                os.remove('./data/' + '/' + station + '/'+fi)
-        else:
-            pass
+def remove_nans():
+    print('\n REMOVING ANY ROWS WITH NANS')
+    stations = os.listdir('./data')
+    for station in stations:
+        print(station)
+        dates = os.listdir('./data/' + station)
+        for date in dates:
+            data = pd.read_csv('./data/'+station+'/'+date).dropna()
+            data.to_csv('./data/'+station+'/'+date, index=None)
+
+
+def merge():
+    new_header = pd.read_csv('new_data_header.txt', header=None)[0].values
+    for station in os.listdir('./data/'):
+        df_list = []
+        for i, date in enumerate(os.listdir('./data/'+station)):
+            data_file = pd.read_csv('./data/'+station+'/' + date, skiprows=1, header=None)
+            df_list.append(data_file)
+        merged_df = pd.concat(df_list, axis=0, ignore_index=1)
+        merged_df.to_csv('./data/'+station+'/'+'merged_'+station+'.txt', index=None, header=new_header)
 
 
 def add_header_to_merged_files():
-    new_data_header = pd.read_csv('new_data_header.txt',header=None)[0].values
+    print('\n ADDING A HEADER TO THE MERGED FILES')
+    new_data_header = pd.read_csv('new_data_header.txt', header=None)[0].values
     stations = os.listdir('./data')
     for station in stations:
         print(station)
@@ -147,7 +177,7 @@ def add_header_to_merged_files():
 
 # http://stackoverflow.com/questions/1157106/remove-all-occurences-of-a-value-from-a-python-list
 
-
+#http://stackoverflow.com/questions/20906474/import-multiple-csv-files-into-python-pandas-and-concatenate-into-one-dataframe
 
 
 
