@@ -25,7 +25,6 @@ def filter_out_header_and_footer():
         print(stations[station_i])
         dates = os.listdir('./data/'+stations[station_i])  # iterate over the stations
         for j in range(len(dates)):
-            print(dates[j])
             data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'r', encoding='cp737')
             data_file_content = data_file.readlines()[8:-8]
             data_file.close()
@@ -35,7 +34,7 @@ def filter_out_header_and_footer():
                     index_of_dash.append(i)
             if len(index_of_dash) == 0:
                 pass
-            if len(index_of_dash)>=2:
+            if len(index_of_dash) >= 2:
                 useful_content = data_file_content[index_of_dash[0]+1:index_of_dash[-1]]
                 data_file = open('./data/'+stations[station_i]+'/'+dates[j], 'w', encoding='cp737')
                 data_file.writelines(useful_content)
