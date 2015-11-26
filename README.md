@@ -16,12 +16,9 @@ tasks:
     1. drop all days with all data missing besides the date
     2. for days with partially missing data just fill them with nan 
 
-
 to run:
 
     1. type:python downloader.py
-
-        once completed...
 
     2. type:python clean_up.py
     
@@ -34,7 +31,7 @@ to run:
 NOTE: 
 tested on the following operating systems:
 
-    1. A windows 7 machine (64 bit)
+    1. Windows 7 machine (64 bit)
     2. mac 10.9.5
 
 Recommended:  have anaconda python 3.5 installed
