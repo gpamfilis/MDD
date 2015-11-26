@@ -18,12 +18,14 @@ tasks:
 
 to run:
 
+    
     1. type:python downloader.py
 
     2. type:python clean_up.py
     
     3. type:python format.py
     
+    4. if you want to run them all together, type: python run.py
     
     you are done!!!
         
