@@ -12,4 +12,4 @@ if __name__ == '__main__':
     add_header_to_all_dayly_files()
     add_complete_dates_location_station()
     remove_nans()
-    merge()
+    # merge()
