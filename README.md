@@ -11,10 +11,11 @@ what it does so far:
     5. adds a header to the files
     6. merges all of the files within a a station
 
-tasks:
+TODO:
 
     1. drop all days with all data missing besides the date
-    2. for days with partially missing data just fill them with nan 
+    2. for days with partially missing data just fill them with nan
+    3. fix the merge() function in utilities because the merged file contains objects instead of float64
 
 to run:
 
