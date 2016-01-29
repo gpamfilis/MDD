@@ -14,19 +14,18 @@ data_folder = 'data'
 
 '''
 must change the location referring to for example "crete"
-while the station referring to a station. now its mixed up.
+while the location referring to a location. now its mixed up.
 '''
 
 
-class MeteorologicalDataDownloader(object):
+class MeteorologicalDataDownloader:
 
-    def __init__(self, year_from=2000, year_to=2015, station='crete'):
+    def __init__(self, year_from=2014, year_to=2015, location='crete'):
         self.year_from = year_from
         self.year_to = year_to
         self.dates_to_download = []
-        self.locations = None
-        self.station = station
-        self.locations = pd.read_csv('stations/'+self.station+'.txt')
+        self.location = location
+        self.stations = pd.read_csv('locations/'+self.location+'.txt')  # in this location there are stations
 
     def dates_for_program(self):
         """
@@ -40,18 +39,18 @@ class MeteorologicalDataDownloader(object):
             self.dates_to_download.append(str(before)[0:7])
         return self.dates_to_download
 
-    def download_file_single_location(self):
+    def download_file(self):
         """
         this function will visit a url for a specific location, enter the date
         and save the file to a specified directory
         # http://penteli.meteo.gr/meteosearch/data/aghiosnikolaos/2009-11.txt
         """
-        for station in self.locations['stations'][:1]:
+        for station in self.stations['stations'][:]:
             try:
                 os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)  # messy!!!
             except:
                 # add logging
-                print('directory: {} all ready exists!!!'.format(station))
+                print('directory: {0} all ready exists!!!'.format(station))
                 pass
             testfile = URLopener()
             os.chdir(data_folder + '/' + station)
@@ -74,10 +73,10 @@ class MeteorologicalDataDownloader(object):
             shutil.rmtree(data_folder)
             os.makedirs(data_folder)
         self.dates_for_program()
-        self.download_file_single_location()
+        self.download_file()
 
 if __name__ == "__main__":
-    mdd = MeteorologicalDataDownloader(2000, 2015)
+    mdd = MeteorologicalDataDownloader(2014, 2015, location='crete')
     mdd.main()
 
 

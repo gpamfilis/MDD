@@ -13,7 +13,7 @@ the logic is:
     2. delete empty and dirty files
     3. add a header
     2. add the complete date to each row in the day column
-    3. merge each station such as "merged_alikianos" in its own directory
+    3. merge each location such as "merged_alikianos" in its own directory
     4. add a header file to each merged location.
 '''
 
@@ -128,9 +128,9 @@ def add_complete_dates_location_station(location_geo='crete'):
             data_df = pd.read_csv('./data/' + station + '/' + date)
             empty_dfs = pd.DataFrame(np.zeros((data_df.shape[0], 2)))
             data_df = pd.concat([empty_dfs, data_df], axis=1)
-            data_df.columns = ['location', 'station'] + list(data_df.columns.values)[2:]  # just change two first two 
+            data_df.columns = ['location', 'location'] + list(data_df.columns.values)[2:]  # just change two first two
             data_df['location'] = location_geo
-            data_df['station'] = station
+            data_df['location'] = station
             for i, day in enumerate(data_df['date']):
                 if len(str(data_df['date'][i])) == 1:
                     data_df['date'][i] = date[-11:-4]+'-0'+str(data_df['date'][i])
