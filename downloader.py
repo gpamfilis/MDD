@@ -21,6 +21,22 @@ while the location referring to a location. now its mixed up.
 
 
 class MeteorologicalDataDownloader:
+    """
+    This is the meteorological data downloader class used to download data from the meteo.gr website.
+    to run simply type the following:
+
+    >>> mdd = MeteorologicalDataDownloader()
+    >>> mdd.main()
+
+    Thats it!!
+
+    to set the year limits simply type (before the mdd.main()):
+    >>>mdd.year_from = 2000
+    >>>mdd.year_to = 2016
+
+    to set the location (crete, etc):
+    >>> mdd.location = 'crete'
+    """
 
     def __init__(self, year_from=2014, year_to=2015, location='crete'):
         self.year_from = year_from
