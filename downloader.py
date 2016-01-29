@@ -2,7 +2,9 @@ import shutil
 import datetime
 from urllib.request import URLopener
 import dateutil.relativedelta
-from utilities import *
+import pandas as pd
+import os
+# from utilities import *
 
 __author__ = 'gpamfilis'
 __version__ = '1.0'
@@ -47,24 +49,25 @@ class MeteorologicalDataDownloader:
         """
         for station in self.stations['stations'][:]:
             try:
-                os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)  # messy!!!
+                os.mkdir('./data/'+station)
+                # os.mkdir(os.path.join(os.getcwd(), data_folder)+'/'+station)  # messy!!!
             except:
-                # add logging
+                # add logging and fix exceptions too broad
                 print('directory: {0} all ready exists!!!'.format(station))
                 pass
             testfile = URLopener()
-            os.chdir(data_folder + '/' + station)
-            print(os.getcwd())
+            # os.chdir(data_folder + '/' + station)
             for i, date in enumerate(self.dates_to_download):
-                name_to_save_file = os.getcwd() + '/' + station + '-' + date + '.txt'
+                # name_to_save_file = os.getcwd() + '/' + station + '-' + date + '.txt'
+                # print(os.getcwd())
                 try:
                     #  this is the complete url to visit and download its contents
                     url = url_seed + station + '/' + date + '.txt'
-                    testfile.retrieve(url, name_to_save_file)
+                    testfile.retrieve(url, './data/' + station + '/' + station + '-' + date + '.txt')
                 except:
                     pass
-            os.chdir(os.pardir)
-            os.chdir(os.pardir)
+            # os.chdir(os.pardir)
+            # os.chdir(os.pardir)
 
     def main(self):
         if not os.path.exists(data_folder):
